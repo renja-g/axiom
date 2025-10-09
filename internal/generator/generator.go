@@ -40,7 +40,7 @@ func (g *Generator) Discover(rootDir string) ([]model.Mutation, error) {
 			// skip vendor and hidden dirs
 			base := filepath.Base(path)
 			if base == "vendor" || len(base) > 0 && base[0] == '.' {
-				return nil
+				return filepath.SkipDir
 			}
 			return nil
 		}

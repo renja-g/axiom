@@ -21,8 +21,8 @@ type Runner struct {
 func New(sb *sandbox.Sandbox) *Runner { return &Runner{sandbox: sb} }
 
 // TestMutation applies a single mutation, runs `go test` on the given package, restores the file, and returns the result.
-func (r *Runner) TestMutation(m model.Mutation, pkg string) (model.Result, error) {
-	result := model.Result{Mutation: m}
+func (r *Runner) TestMutation(m model.Mutation, pkg string) (result model.Result, err error) {
+	result = model.Result{Mutation: m}
 
 	// determine sandbox path equivalent
 	path := m.FilePath
@@ -40,7 +40,8 @@ func (r *Runner) TestMutation(m model.Mutation, pkg string) (model.Result, error
 	fset := token.NewFileSet()
 	astFile, perr := parser.ParseFile(fset, path, original, 0)
 	if perr != nil {
-		return result, perr
+		err = perr
+		return
 	}
 
 	// apply mutation
@@ -63,18 +64,32 @@ func (r *Runner) TestMutation(m model.Mutation, pkg string) (model.Result, error
 	// write mutated
 	var buf bytes.Buffer
 	printer.Fprint(&buf, fset, astFile)
-	os.WriteFile(path, buf.Bytes(), 0644)
-	defer os.WriteFile(path, original, 0644)
+	if werr := os.WriteFile(path, buf.Bytes(), 0644); werr != nil {
+		err = werr
+		return
+	}
+	defer func() {
+		if restoreErr := os.WriteFile(path, original, 0644); err == nil && restoreErr != nil {
+			err = restoreErr
+		}
+	}()
 
 	// run tests
 	cmd := exec.Command("go", "test", pkg)
 	if r.sandbox != nil {
 		cmd.Dir = r.sandbox.Root()
 	}
-	output, _ := cmd.CombinedOutput()
+	output, cmdErr := cmd.CombinedOutput()
 	result.Output = string(output)
-	if bytes.Contains(output, []byte("FAIL")) {
-		result.Killed = true
+	if cmdErr != nil {
+		if exitErr, ok := cmdErr.(*exec.ExitError); ok {
+			// Non-zero exit means the mutation was killed.
+			result.Killed = exitErr.ExitCode() != 0
+			return
+		}
+		err = cmdErr
+		return
 	}
-	return result, nil
+	result.Killed = false
+	return
 }

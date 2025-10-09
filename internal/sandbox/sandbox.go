@@ -108,5 +108,5 @@ func copyFile(src, dst string) error {
 	if _, err := io.Copy(out, in); err != nil {
 		return err
 	}
-	return out.Close()
+	return nil
 }
