@@ -26,6 +26,7 @@ func NewRegistry() *Registry {
 			arithmetic.Plus{},
 			arithmetic.Minus{},
 			arithmetic.Multiplication{},
+			arithmetic.Division{},
 		},
 	}
 }
