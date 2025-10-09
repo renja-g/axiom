@@ -10,28 +10,35 @@ import (
 	"os/exec"
 
 	"github.com/renja-g/go-mutation-testing/internal/model"
+	"github.com/renja-g/go-mutation-testing/internal/sandbox"
 )
 
-// Runner applies mutations and runs tests.
+// Runner applies mutations and runs tests inside a sandbox copy.
 type Runner struct {
-	workDir string
+	sandbox *sandbox.Sandbox
 }
 
-func New(workDir string) *Runner { return &Runner{workDir: workDir} }
+func New(sb *sandbox.Sandbox) *Runner { return &Runner{sandbox: sb} }
 
 // TestMutation applies a single mutation, runs `go test` on the given package, restores the file, and returns the result.
 func (r *Runner) TestMutation(m model.Mutation, pkg string) (model.Result, error) {
 	result := model.Result{Mutation: m}
 
+	// determine sandbox path equivalent
+	path := m.FilePath
+	if r.sandbox != nil {
+		path = r.sandbox.MirrorPath(m.FilePath)
+	}
+
 	// read original
-	original, rerr := os.ReadFile(m.FilePath)
+	original, rerr := os.ReadFile(path)
 	if rerr != nil {
 		return result, rerr
 	}
 
 	// parse
 	fset := token.NewFileSet()
-	astFile, perr := parser.ParseFile(fset, m.FilePath, original, 0)
+	astFile, perr := parser.ParseFile(fset, path, original, 0)
 	if perr != nil {
 		return result, perr
 	}
@@ -56,13 +63,13 @@ func (r *Runner) TestMutation(m model.Mutation, pkg string) (model.Result, error
 	// write mutated
 	var buf bytes.Buffer
 	printer.Fprint(&buf, fset, astFile)
-	os.WriteFile(m.FilePath, buf.Bytes(), 0644)
-	defer os.WriteFile(m.FilePath, original, 0644)
+	os.WriteFile(path, buf.Bytes(), 0644)
+	defer os.WriteFile(path, original, 0644)
 
 	// run tests
 	cmd := exec.Command("go", "test", pkg)
-	if r.workDir != "" {
-		cmd.Dir = r.workDir
+	if r.sandbox != nil {
+		cmd.Dir = r.sandbox.Root()
 	}
 	output, _ := cmd.CombinedOutput()
 	result.Output = string(output)

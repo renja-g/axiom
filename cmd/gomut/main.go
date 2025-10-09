@@ -8,6 +8,7 @@ import (
 
 	"github.com/renja-g/go-mutation-testing/internal/generator"
 	"github.com/renja-g/go-mutation-testing/internal/runner"
+	"github.com/renja-g/go-mutation-testing/internal/sandbox"
 	"github.com/renja-g/go-mutation-testing/mutator"
 )
 
@@ -25,9 +26,18 @@ func main() {
 
 	pkgArg := normalizePkgArg(*pkg, abspath)
 
+	sb, err := sandbox.New(abspath)
+	if err != nil {
+		panic(err)
+	}
+	defer sb.Cleanup()
+
 	reg := mutator.NewRegistry()
 	gen := generator.New(reg)
-	muts, err := gen.Discover(abspath)
+	gen.WithPathMapper(func(path string) string {
+		return sb.OriginalPath(path)
+	})
+	muts, err := gen.Discover(sb.Root())
 	if err != nil {
 		panic(err)
 	}
@@ -41,7 +51,7 @@ func main() {
 		return
 	}
 
-	r := runner.New(abspath)
+	r := runner.New(sb)
 	killed, survived := 0, 0
 	for i, m := range muts {
 		fmt.Printf("\n[%d/%d] Testing %s at %s:%d:%d\n", i+1, len(muts), m.Mutator.Name(), displayPath(abspath, m.FilePath), m.Line, m.Column)

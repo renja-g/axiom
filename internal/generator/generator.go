@@ -13,11 +13,19 @@ import (
 
 // Generator scans Go files and discovers applicable mutations using the registry.
 type Generator struct {
-	registry *mutator.Registry
+	registry   *mutator.Registry
+	pathMapper func(string) string
 }
 
 func New(registry *mutator.Registry) *Generator {
-	return &Generator{registry: registry}
+	return &Generator{registry: registry, pathMapper: func(p string) string { return p }}
+}
+
+// WithPathMapper sets a mapping function to convert discovered sandbox file paths into output paths.
+func (g *Generator) WithPathMapper(mapper func(string) string) {
+	if mapper != nil {
+		g.pathMapper = mapper
+	}
 }
 
 // Discover walks a directory recursively and returns all discovered mutations.
@@ -55,7 +63,7 @@ func (g *Generator) Discover(rootDir string) ([]model.Mutation, error) {
 					if bin, ok := n.(*ast.BinaryExpr); ok {
 						pos := fset.Position(bin.OpPos)
 						mutations = append(mutations, model.Mutation{
-							FilePath:   path,
+							FilePath:   g.pathMapper(path),
 							Line:       pos.Line,
 							Column:     pos.Column,
 							Mutator:    m,
