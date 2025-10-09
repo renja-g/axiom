@@ -3,8 +3,8 @@ package mutator
 import (
 	"go/ast"
 
+	"github.com/renja-g/go-mutation-testing/mutator/arithmetic"
 	"github.com/renja-g/go-mutation-testing/mutator/conditional_boundary"
-	"github.com/renja-g/go-mutation-testing/mutator/function_signature"
 )
 
 // Registry holds all available mutators
@@ -22,9 +22,8 @@ func NewRegistry() *Registry {
 			conditional_boundary.GreaterThan{},
 			conditional_boundary.LessThan{},
 
-			// Function Signature Mutators
-			function_signature.Exported{},
-			function_signature.Unexported{},
+			// Arithmetic Mutators
+			arithmetic.Plus{},
 		},
 	}
 }
