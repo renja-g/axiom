@@ -24,6 +24,8 @@ func NewRegistry() *Registry {
 
 			// Arithmetic Mutators
 			arithmetic.Plus{},
+			arithmetic.Minus{},
+			arithmetic.Multiplication{},
 		},
 	}
 }
