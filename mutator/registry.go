@@ -23,11 +23,22 @@ func NewRegistry() *Registry {
 			conditional_boundary.LessThan{},
 
 			// Arithmetic Mutators
-			arithmetic.Plus{},
-			arithmetic.Minus{},
-			arithmetic.Multiplication{},
+			arithmetic.BitwiseAnd{},
+			arithmetic.BitwiseNot{},
+			arithmetic.BitwiseOr{},
+			arithmetic.BitwiseXor{},
+			arithmetic.DivEqual{},
 			arithmetic.Division{},
+			arithmetic.MinusEqual{},
+			arithmetic.Minus{},
+			arithmetic.ModEqual{},
 			arithmetic.Modulus{},
+			arithmetic.MulEqual{},
+			arithmetic.Multiplication{},
+			arithmetic.PlusEqual{},
+			arithmetic.Plus{},
+			arithmetic.ShiftLeft{},
+			arithmetic.ShiftRight{},
 		},
 	}
 }
