@@ -4,7 +4,9 @@ import (
 	"go/ast"
 
 	"github.com/renja-g/go-mutation-testing/mutator/arithmetic"
+	"github.com/renja-g/go-mutation-testing/mutator/boolean"
 	"github.com/renja-g/go-mutation-testing/mutator/conditional_boundary"
+	"github.com/renja-g/go-mutation-testing/mutator/logical"
 )
 
 // Registry holds all available mutators
@@ -39,6 +41,14 @@ func NewRegistry() *Registry {
 			arithmetic.Plus{},
 			arithmetic.ShiftLeft{},
 			arithmetic.ShiftRight{},
+
+			// Boolean Mutators
+			boolean.TrueValue{},
+			boolean.FalseValue{},
+
+			// Logical Mutators
+			logical.LogicalAnd{},
+			logical.LogicalOr{},
 		},
 	}
 }
