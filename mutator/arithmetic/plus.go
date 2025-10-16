@@ -26,25 +26,25 @@ func (m Plus) CanMutateWithType(node ast.Node, typeInfo *types.Info) bool {
 	if !ok || bin.Op != token.ADD {
 		return false
 	}
-	
+
 	// Check if either operand is a string type
 	xType := typeInfo.TypeOf(bin.X)
 	yType := typeInfo.TypeOf(bin.Y)
-	
+
 	// If we can't determine the type, fall back to allowing the mutation
 	if xType == nil || yType == nil {
 		return true
 	}
-	
+
 	// Check if either operand is a string
 	xBasic, xOk := xType.Underlying().(*types.Basic)
 	yBasic, yOk := yType.Underlying().(*types.Basic)
-	
+
 	if (xOk && xBasic.Kind() == types.String) || (yOk && yBasic.Kind() == types.String) {
 		// This is string concatenation, don't mutate
 		return false
 	}
-	
+
 	return true
 }
 
