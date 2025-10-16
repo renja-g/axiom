@@ -100,9 +100,22 @@ func normalizePkgArg(pkg, root string) string {
 }
 
 func samePath(a, b string) bool {
-	aClean := filepath.Clean(a)
-	bClean := filepath.Clean(b)
-	return aClean == bClean
+	resolve := func(p string) string {
+		if p == "" {
+			return ""
+		}
+		if !filepath.IsAbs(p) {
+			if cwd, err := os.Getwd(); err == nil {
+				p = filepath.Join(cwd, p)
+			}
+		}
+		if resolved, err := filepath.EvalSymlinks(p); err == nil {
+			p = resolved
+		}
+		return filepath.Clean(p)
+	}
+
+	return resolve(a) == resolve(b)
 }
 
 func displayPath(root, path string) string {
