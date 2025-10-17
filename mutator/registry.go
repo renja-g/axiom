@@ -19,6 +19,8 @@ func NewRegistry() *Registry {
 	return &Registry{
 		mutators: []Mutator{
 			// Conditional Boundary Mutators
+			conditional_boundary.EqualTo{},
+			conditional_boundary.NotEqualTo{},
 			conditional_boundary.GreaterThanOrEqualTo{},
 			conditional_boundary.LessThanOrEqualTo{},
 			conditional_boundary.GreaterThan{},

@@ -20,6 +20,8 @@ func TestNewRegistryIncludesExpectedMutators(t *testing.T) {
 	}
 
 	expected := []Mutator{
+		conditional_boundary.EqualTo{},
+		conditional_boundary.NotEqualTo{},
 		conditional_boundary.GreaterThanOrEqualTo{},
 		conditional_boundary.LessThanOrEqualTo{},
 		conditional_boundary.GreaterThan{},
