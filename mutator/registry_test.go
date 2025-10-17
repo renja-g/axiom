@@ -45,6 +45,7 @@ func TestNewRegistryIncludesExpectedMutators(t *testing.T) {
 		boolean.TrueValue{},
 		boolean.FalseValue{},
 		logical.LogicalAnd{},
+		logical.LogicalNot{},
 		logical.LogicalOr{},
 	}
 

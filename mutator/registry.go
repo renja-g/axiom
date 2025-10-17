@@ -50,6 +50,7 @@ func NewRegistry() *Registry {
 
 			// Logical Mutators
 			logical.LogicalAnd{},
+			logical.LogicalNot{},
 			logical.LogicalOr{},
 		},
 	}
