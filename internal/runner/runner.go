@@ -9,8 +9,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/renja-g/go-mutation-testing/internal/model"
-	"github.com/renja-g/go-mutation-testing/internal/sandbox"
+	"github.com/renja-g/axiom/internal/model"
+	"github.com/renja-g/axiom/internal/sandbox"
 )
 
 // Runner applies mutations and runs tests inside a sandbox copy.

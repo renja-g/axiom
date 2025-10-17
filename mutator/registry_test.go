@@ -5,10 +5,10 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/renja-g/go-mutation-testing/mutator/arithmetic"
-	"github.com/renja-g/go-mutation-testing/mutator/boolean"
-	"github.com/renja-g/go-mutation-testing/mutator/conditional_boundary"
-	"github.com/renja-g/go-mutation-testing/mutator/logical"
+	"github.com/renja-g/axiom/mutator/arithmetic"
+	"github.com/renja-g/axiom/mutator/boolean"
+	"github.com/renja-g/axiom/mutator/conditional_boundary"
+	"github.com/renja-g/axiom/mutator/logical"
 )
 
 func TestNewRegistryIncludesExpectedMutators(t *testing.T) {

@@ -8,8 +8,8 @@ import (
 
 	"go/token"
 
-	"github.com/renja-g/go-mutation-testing/internal/model"
-	"github.com/renja-g/go-mutation-testing/mutator"
+	"github.com/renja-g/axiom/internal/model"
+	"github.com/renja-g/axiom/mutator"
 )
 
 func TestNewDetectsTypeAwareMutators(t *testing.T) {

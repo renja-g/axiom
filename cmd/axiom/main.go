@@ -6,10 +6,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/renja-g/go-mutation-testing/internal/generator"
-	"github.com/renja-g/go-mutation-testing/internal/runner"
-	"github.com/renja-g/go-mutation-testing/internal/sandbox"
-	"github.com/renja-g/go-mutation-testing/mutator"
+	"github.com/renja-g/axiom/internal/generator"
+	"github.com/renja-g/axiom/internal/runner"
+	"github.com/renja-g/axiom/internal/sandbox"
+	"github.com/renja-g/axiom/mutator"
 )
 
 func main() {

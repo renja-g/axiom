@@ -9,8 +9,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/renja-g/go-mutation-testing/internal/model"
-	"github.com/renja-g/go-mutation-testing/mutator"
+	"github.com/renja-g/axiom/internal/model"
+	"github.com/renja-g/axiom/mutator"
 )
 
 // Generator scans Go files and discovers applicable mutations using the registry.

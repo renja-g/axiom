@@ -1,4 +1,4 @@
-# gomut
+# Axiom
 
 A mutation testing tool for Go that helps you measure the effectiveness of your test suite.
 
@@ -9,18 +9,18 @@ Mutation testing introduces small changes (mutations) to your code and runs your
 ## Installation
 
 ```bash
-go install github.com/renja-g/go-mutation-testing/cmd/gomut@latest
+go install github.com/renja-g/axiom/cmd/axiom@latest
 ```
 ### Uninstall
 ```bash
-rm $(go env GOPATH)/bin/gomut
+rm $(go env GOPATH)/bin/axiom
 ```
 
 Or build from source:
 ```bash
-git clone https://github.com/renja-g/go-mutation-testing.git
-cd go-mutation-testing
-go build -o gomut ./cmd/gomut
+git clone https://github.com/renja-g/axiom.git
+cd axiom
+go build -o axiom ./cmd/axiom
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ go build -o gomut ./cmd/gomut
 Basic usage:
 
 ```bash
-gomut -path ./src
+axiom -path ./src
 ```
 
 ### Options
@@ -86,17 +86,17 @@ gomut -path ./src
 
 List all mutations without running tests:
 ```bash
-gomut -path ./myapp -list
+axiom -path ./myapp -list
 ```
 
 Run mutation testing on a specific package:
 ```bash
-gomut -path ./myapp -pkg ./internal/...
+axiom -path ./myapp -pkg ./internal/...
 ```
 
 Run with verbose output:
 ```bash
-gomut -path ./src -v
+axiom -path ./src -v
 ```
 
 ## Output

@@ -24,7 +24,7 @@ func New(originalRoot string) (*Sandbox, error) {
 		return nil, &fs.PathError{Op: "sandbox", Path: originalRoot, Err: fs.ErrInvalid}
 	}
 
-	tempDir, err := os.MkdirTemp("", "gomut-sandbox-*")
+	tempDir, err := os.MkdirTemp("", "axiom-sandbox-*")
 	if err != nil {
 		return nil, err
 	}

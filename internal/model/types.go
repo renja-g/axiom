@@ -4,7 +4,7 @@ import (
 	"go/ast"
 	"go/token"
 
-	"github.com/renja-g/go-mutation-testing/mutator"
+	"github.com/renja-g/axiom/mutator"
 )
 
 // Mutation describes a specific change to be applied at a location.
