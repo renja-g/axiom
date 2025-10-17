@@ -31,6 +31,8 @@ func NewRegistry() *Registry {
 			arithmetic.BitwiseNot{},
 			arithmetic.BitwiseOr{},
 			arithmetic.BitwiseXor{},
+			arithmetic.Increment{},
+			arithmetic.Decrement{},
 			arithmetic.DivEqual{},
 			arithmetic.Division{},
 			arithmetic.MinusEqual{},

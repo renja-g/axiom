@@ -26,6 +26,8 @@ func TestNewRegistryIncludesExpectedMutators(t *testing.T) {
 		conditional_boundary.LessThanOrEqualTo{},
 		conditional_boundary.GreaterThan{},
 		conditional_boundary.LessThan{},
+		arithmetic.Increment{},
+		arithmetic.Decrement{},
 		arithmetic.BitwiseAnd{},
 		arithmetic.BitwiseNot{},
 		arithmetic.BitwiseOr{},
