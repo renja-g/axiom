@@ -43,6 +43,7 @@ func NewRegistry() *Registry {
 			arithmetic.Multiplication{},
 			arithmetic.PlusEqual{},
 			arithmetic.Plus{},
+			arithmetic.IntegerLiteralBoundary{},
 			arithmetic.ShiftLeft{},
 			arithmetic.ShiftRight{},
 

@@ -42,6 +42,7 @@ func TestNewRegistryIncludesExpectedMutators(t *testing.T) {
 		arithmetic.Multiplication{},
 		arithmetic.PlusEqual{},
 		arithmetic.Plus{},
+		arithmetic.IntegerLiteralBoundary{},
 		arithmetic.ShiftLeft{},
 		arithmetic.ShiftRight{},
 		boolean.TrueValue{},
